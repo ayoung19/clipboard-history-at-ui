@@ -12,8 +12,8 @@
     },
 
     "background": {
-        "scripts": ["js/eventPage.js"],
-        "persistent": false
+        "page": "background.html",
+        "persistent": true
     },
 
     "icons": {
@@ -22,5 +22,7 @@
         "128": "icon128.png"
     },
 
-    "permissions": []
+    "permissions": [
+        "storage"
+    ]
 }
