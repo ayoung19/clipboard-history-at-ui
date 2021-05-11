@@ -1,7 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Popup() {
-  // chrome.runtime.sendMessage({ popupMounted: true });
+export const Popup = () => {
+  const [history, setHistory] = useState([]);
 
-  return <div className="font-bold">Hello, world!</div>;
+  useEffect(() => {
+    chrome.storage.local.get("clipboard-history", (result) => {
+      setHistory(result["clipboard-history"] || []);
+    });
+  }, []);
+
+  const resetHandler = () => {
+    chrome.storage.local.set({ "clipboard-history": [] }, () => {});
+  }
+
+  return (
+    <div className="w-custom h-custom overflow-y-scroll">
+      {history.reverse().map((item) => <div className="w-full truncate">{item.replace("\n", "")}</div>)}
+      <button onClick={resetHandler}>reset</button>
+    </div>
+  );
 }
