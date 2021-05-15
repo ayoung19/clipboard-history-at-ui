@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       width: {
-        custom: "700px",
+        checkbox: "16px",
       },
       height: {
-        custom: "400px",
+        checkbox: "16px",
       },
     },
   },
