@@ -19,6 +19,13 @@ export const Background = () => {
         return textarea.value;
     }
 
+    const write = (item) => {
+        const { current: textarea } = ref;
+        textarea.value = item;
+        textarea.select();
+        document.execCommand("copy");
+    }
+
     useEffect(() => {
         chrome.storage.local.get("clipboard-history", (result) => {
             history = result["clipboard-history"] || save([]);
@@ -33,6 +40,16 @@ export const Background = () => {
                     save(history);
                 }
             }, 1000);
+        });
+
+        // TODO: Fix possible race condition with interval
+        chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+            if (message.type === "copy") {
+                current = message.payload;
+                write(current);
+            }
+
+            return false;
         });
     }, []);
     

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox } from "./components/Checkbox";
+import { TableRow } from "./components/TableRow";
 
 export const Popup = () => {
   const [history, setHistory] = useState([]);
@@ -23,14 +23,7 @@ export const Popup = () => {
         </colgroup>
         <tbody>
           {history.reverse().map((item) => (
-            <tr className="transition hover:bg-blue-100 cursor-pointer">
-              <td className="border-t border-b px-4 py-3">
-                <Checkbox />
-              </td>
-              <td className="border-t border-b px-4 py-3 truncate select-none">
-                {item.replace("\n", "")}
-              </td>
-            </tr>
+            <TableRow item={item.replace("\n", "")} />
           ))}
         </tbody>
       </table>
