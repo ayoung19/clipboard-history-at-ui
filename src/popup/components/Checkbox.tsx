@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { classNames } from "../util/helpers";
 
-export const Checkbox = () => {
-  const [checked, setChecked] = useState(false);
-
+export const Checkbox = ({ checked, setChecked }) => {
   return (
     <label
       htmlFor=""
       className={classNames(
-        "transition-all w-checkbox h-checkbox rounded flex justify-center items-center cursor-pointer hover:border-blue-400",
-        checked ? "bg-blue-400" : "bg-white border"
+        "transition-all w-checkbox h-checkbox rounded flex justify-center items-center cursor-pointer hover:border-brand-400",
+        checked ? "bg-brand-400" : "bg-white border border-border-base"
       )}
       onClick={() => {
         setChecked(!checked);
