@@ -1,5 +1,10 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Background } from './Background';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { Background } from "./Background";
 
-ReactDOM.render(<Background />, document.getElementById('background'));
+ReactDOM.render(
+  <React.StrictMode>
+    <Background />
+  </React.StrictMode>,
+  document.getElementById("background")
+);

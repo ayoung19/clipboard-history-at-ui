@@ -13,7 +13,7 @@ export const TableRow = ({ item }) => {
     chrome.runtime.sendMessage({ type: "copy", payload: item });
     dispatch(add({
       type: Type.success,
-      text: "Successfully copied item to clipboard!",
+      text: "Item has been copied to clipboard!",
     }))
   };
 

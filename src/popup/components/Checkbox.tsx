@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { classNames } from "../util/helpers";
 
 export const Checkbox = ({ checked, setChecked }) => {
