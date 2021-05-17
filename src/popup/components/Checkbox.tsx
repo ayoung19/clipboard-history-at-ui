@@ -9,7 +9,8 @@ export const Checkbox = ({ checked, setChecked }) => {
         "transition-all w-4 h-4 rounded flex justify-center items-center cursor-pointer hover:border-brand-400",
         checked ? "bg-brand-400" : "bg-white border border-border-base"
       )}
-      onClick={() => {
+      onClick={(event) => {
+        event.stopPropagation();
         setChecked(!checked);
       }}
     >
