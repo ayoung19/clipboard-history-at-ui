@@ -5,11 +5,8 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      width: {
-        checkbox: "16px",
-      },
-      height: {
-        checkbox: "16px",
+      boxShadow: {
+        toast: '0 2px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04)',
       },
       colors: {
         primary: "#6190E8",
@@ -21,6 +18,8 @@ module.exports = {
           default: "#6190E8",
           light: "#78A4F4",
           dark: "#346FC2",
+          text: "#3F536E",
+          title: "#2C405A",
           50: "#ECF2FC",
           100: "#D0DEF8",
           200: "#B0C8F4",
@@ -46,6 +45,7 @@ module.exports = {
           light: "#ECF5FD",
           lighter: "#f6fafe",
           gray: "#f7f7f7",
+          black: "#000",
         },
       },
     },

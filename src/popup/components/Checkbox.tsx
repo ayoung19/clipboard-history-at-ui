@@ -6,7 +6,7 @@ export const Checkbox = ({ checked, setChecked }) => {
     <label
       htmlFor=""
       className={classNames(
-        "transition-all w-checkbox h-checkbox rounded flex justify-center items-center cursor-pointer hover:border-brand-400",
+        "transition-all w-4 h-4 rounded flex justify-center items-center cursor-pointer hover:border-brand-400",
         checked ? "bg-brand-400" : "bg-white border border-border-base"
       )}
       onClick={() => {

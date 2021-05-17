@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "./store/index";
+import { Messages } from "./components/Messages";
 import { TableRow } from "./components/TableRow";
 
 export const Popup = () => {
@@ -15,7 +18,8 @@ export const Popup = () => {
   };
 
   return (
-    <div>
+    <Provider store={store}>
+      <Messages />
       <table className="w-full table-fixed">
         <colgroup>
           <col width="50"></col>
@@ -30,6 +34,6 @@ export const Popup = () => {
       <div className="grid grid-cols-12"></div>
 
       <button onClick={resetHandler}>reset</button>
-    </div>
+    </Provider>
   );
 };
