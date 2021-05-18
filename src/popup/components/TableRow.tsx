@@ -42,7 +42,7 @@ export const TableRow = ({ rowHeight, index, text }) => {
     >
       <div
         className={classNames(
-          "absolute transition duration-300 border-t border-gray-100 cursor-pointer transform scale-100 flex items-center",
+          "absolute transition duration-300 border-t border-gray-100 cursor-pointer transform scale-100 flex items-center w-full",
           checked ? "bg-bg-light" : "hover:bg-bg-lighter",
           flash ? "flash" : ""
         )}
@@ -52,10 +52,10 @@ export const TableRow = ({ rowHeight, index, text }) => {
           height: `${rowHeight}px`,
         }}
       >
-        <div className="w-col1 inline-block px-4">
+        <div className="px-4 w-col1">
           <Checkbox checked={checked} setChecked={setChecked} />
         </div>
-        <div className="w-col2 inline-block px-4 truncate select-none text-brand-text">
+        <div className="px-4 flex-grow min-w-0 truncate select-none text-brand-text">
           {text}
         </div>
       </div>

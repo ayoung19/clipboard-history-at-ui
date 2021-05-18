@@ -31,8 +31,3 @@
         animation: flash 1s ease forwards;
     }
 }
-
-html, body {
-    width: 700px;
-    height: 400px;
-}

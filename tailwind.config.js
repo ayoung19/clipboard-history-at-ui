@@ -6,8 +6,12 @@ module.exports = {
   theme: {
     extend: {
       width: {
+        table: "700px",
         col1: "50px",
-        col2: "650px"
+        col2: "650px",
+      },
+      height: {
+        table: "400px",
       },
       transitionTimingFunction: {
         default: "ease",
