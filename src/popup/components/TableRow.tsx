@@ -44,7 +44,7 @@ export const TableRow = ({ item }) => {
         className={classNames(
           "transition duration-300 border-t border-b border-gray-100 cursor-pointer transform scale-100",
           checked ? "bg-bg-light" : "hover:bg-bg-lighter",
-          flash ? "example" : ""
+          flash ? "flash" : ""
         )}
         onClick={clickHandler}
       >

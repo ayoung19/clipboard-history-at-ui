@@ -5,8 +5,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      transitionTimingFunction: {
+        default: "ease",
+      },
       boxShadow: {
-        toast: '0 2px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04)',
+        toast: "0 2px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04)",
       },
       colors: {
         primary: "#6190E8",

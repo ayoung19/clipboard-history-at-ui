@@ -30,11 +30,9 @@ export const Message = ({ text, index, type, ...props }) => {
     >
       <div
         ref={nodeRef}
-        className="fixed right-4 z-10 px-4 py-2 bg-white rounded text-brand-text shadow-toast"
+        className="transition-all ease-default duration-300 fixed right-4 z-10 px-4 py-2 bg-white rounded text-brand-text shadow-toast"
         style={{
           top: `${16 + index * 50}px`,
-          transition:
-            "transform 300ms ease, top 300ms ease, opacity 300ms ease",
         }}
       >
         <i className={classNames("feather mr-3", TYPE_TO_CLASSNAME[type])} />
