@@ -7,15 +7,28 @@
     .notification-enter {
         transform: translateX(245px);
     }
+
     .notification-enter-active {
         transform: translateX(0px);
     }
+
     .notification-exit {
         opacity: 1;
     }
+
     .notification-exit-active {
         opacity: 0;
         transition: opacity 500ms;
+    }
+
+    @keyframes example {
+        0%   {background-color: #f6fafe;}
+        10%  {background-color: #D0DEF8;}
+        to {}
+    }
+
+    .example {
+        animation: example 1s ease forwards;
     }
 }
 
