@@ -5,7 +5,7 @@ import Tippy from "@tippyjs/react";
 import { add } from "../store/messages";
 import { useAppDispatch } from "../util/hooks";
 
-export const TableRow = ({ item }) => {
+export const TableRow = ({ rowHeight, index, text }) => {
   const dispatch = useAppDispatch();
   const [checked, setChecked] = useState(false);
   const [flash, setFlash] = useState(false);
@@ -20,7 +20,7 @@ export const TableRow = ({ item }) => {
 
   const clickHandler = () => {
     if (!flash) {
-      chrome.runtime.sendMessage({ type: "copy", payload: item });
+      chrome.runtime.sendMessage({ type: "copy", payload: text });
       setFlash(true);
       dispatch(
         add({
@@ -40,21 +40,25 @@ export const TableRow = ({ item }) => {
       }
       delay={[750, null]}
     >
-      <tr
+      <div
         className={classNames(
-          "transition duration-300 border-t border-b border-gray-100 cursor-pointer transform scale-100",
+          "absolute transition duration-300 border-t border-gray-100 cursor-pointer transform scale-100 flex items-center",
           checked ? "bg-bg-light" : "hover:bg-bg-lighter",
           flash ? "flash" : ""
         )}
         onClick={clickHandler}
+        style={{
+          transform: `translateY(${rowHeight * index}px)`,
+          height: `${rowHeight}px`,
+        }}
       >
-        <td className="px-4 py-3">
+        <div className="w-col1 inline-block px-4">
           <Checkbox checked={checked} setChecked={setChecked} />
-        </td>
-        <td className="px-4 py-3 truncate select-none text-brand-text">
-          {item}
-        </td>
-      </tr>
+        </div>
+        <div className="w-col2 inline-block px-4 truncate select-none text-brand-text">
+          {text}
+        </div>
+      </div>
     </Tippy>
   );
 };

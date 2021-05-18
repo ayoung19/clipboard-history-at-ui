@@ -5,6 +5,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      width: {
+        col1: "50px",
+        col2: "650px"
+      },
       transitionTimingFunction: {
         default: "ease",
       },
