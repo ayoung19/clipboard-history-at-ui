@@ -5,7 +5,7 @@ import Tippy from "@tippyjs/react";
 import { add } from "../store/messages";
 import { useAppDispatch } from "../util/hooks";
 
-export const TableRow = ({ rowHeight, index, text }) => {
+export const TableRow = ({ index, rowHeight, text }) => {
   const dispatch = useAppDispatch();
   const [checked, setChecked] = useState(false);
   const [flash, setFlash] = useState(false);
