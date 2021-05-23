@@ -4,19 +4,19 @@ import { v4 as uuidv4 } from "uuid";
 import { Type } from "../util/helpers";
 
 interface Message {
-  id: string,
-  type: Type,
-  text: string,
+  id: string;
+  type: Type;
+  text: string;
 }
 
 interface MessagesState {
-  messages: Array<Message>,
+  messages: Array<Message>;
 }
 
 // Define the initial state using that type
 const initialState: MessagesState = {
   messages: [],
-}
+};
 
 export const messagesSlice = createSlice({
   name: "messages",
@@ -26,14 +26,14 @@ export const messagesSlice = createSlice({
     add: (state, action) => {
       state.messages.push({
         id: uuidv4(),
-        ...action.payload
+        ...action.payload,
       });
     },
     remove: (state) => {
       state.messages.shift();
     },
   },
-})
+});
 
 export const { add, remove } = messagesSlice.actions;
 

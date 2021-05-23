@@ -10,7 +10,7 @@ export const Messages = () => {
   return (
     <TransitionGroup>
       {messages.map(({ id, text, type }, i) => (
-          <Message key={id} id={id} text={text} index={i} type={type} />
+        <Message key={id} id={id} text={text} index={i} type={type} />
       ))}
     </TransitionGroup>
   );
