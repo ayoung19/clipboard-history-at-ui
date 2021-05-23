@@ -1,13 +1,37 @@
 import React, { useEffect, useRef } from "react";
 
-export const Background = () => {
-  const ref = useRef<HTMLTextAreaElement>();
-  let history;
-  let current;
+// TODO: Make sure this mutex works correctly or if it's even needed.
+function Mutex() {
+  let current = Promise.resolve();
+  this.lock = () => {
+    let _resolve;
+    const p = new Promise((resolve) => {
+      _resolve = () => resolve();
+    });
+    // Caller gets a promise that resolves when the current outstanding
+    // lock resolves
+    const rv = current.then(() => _resolve);
+    // Don't allow the next request until the new promise is done
+    current = p;
+    // Return the new promise
+    return rv;
+  };
+}
 
-  const save = (history: Array<string>) => {
-    chrome.storage.local.set({ "clipboard-history": history }, () => {});
-    return history;
+export const Background: React.FC = () => {
+  let history: HistoryItem[];
+  let current: string;
+  const mutex = new Mutex();
+  const ref = useRef<HTMLTextAreaElement>();
+
+  const critical = async (callback: () => void) => {
+    const unlock = await mutex.lock();
+    callback();
+    unlock();
+  };
+
+  const save = () => {
+    chrome.storage.local.set({ "clipboard-history": history });
   };
 
   const read = () => {
@@ -19,34 +43,43 @@ export const Background = () => {
     return textarea.value;
   };
 
-  const write = (item) => {
+  const write = (value: string) => {
     const { current: textarea } = ref;
-    textarea.value = item;
+    textarea.value = value;
     textarea.select();
     document.execCommand("copy");
   };
 
   useEffect(() => {
+    // history = [];
+    // save();
     chrome.storage.local.get("clipboard-history", (result) => {
-      history = result["clipboard-history"] || save([]);
+      history = result["clipboard-history"] || [];
+      console.log(history);
       current = read();
 
       // TODO: Clear interval on unmount?
       setInterval(() => {
-        const newest = read();
-        if (current !== newest) {
-          current = newest;
-          history.push(current);
-          save(history);
-        }
+        critical(() => {
+          const newest = read();
+          if (current !== newest) {
+            current = newest;
+            history.push({
+              date: new Date(),
+              value: current,
+            });
+            save();
+          }
+        });
       }, 1000);
     });
 
-    // TODO: Fix possible race condition with interval
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    chrome.runtime.onMessage.addListener((message) => {
       if (message.type === "copy") {
-        current = message.payload;
-        write(current);
+        critical(() => {
+          current = message.payload;
+          write(current);
+        });
       }
 
       return false;

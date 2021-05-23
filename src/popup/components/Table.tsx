@@ -47,7 +47,7 @@ export const Table = ({ rowHeight }) => {
         <TableRow
           key={range[0] + i}
           index={range[0] + i}
-          text={item.replace("\n", "")}
+          text={item.value.replace("\n", "")}
           rowHeight={rowHeight}
         />
       ))}
