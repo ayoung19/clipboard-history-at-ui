@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import { remove } from "../store/messages";
+import { removeMessage } from "../store/actions";
 import { CSSTransition } from "react-transition-group";
-import { classNames, Type } from "../util/helpers";
-import { useAppDispatch } from "../util/hooks";
+import { classNames, useAppDispatch } from "../utils";
+import { Type } from "../enums";
 
 export const Message = ({ text, index, type, ...props }) => {
   const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ export const Message = ({ text, index, type, ...props }) => {
       classNames="notification"
       onEntered={() => {
         setTimeout(() => {
-          dispatch(remove());
+          dispatch(removeMessage());
         }, 2000);
       }}
       unmountOnExit
@@ -41,5 +41,3 @@ export const Message = ({ text, index, type, ...props }) => {
     </CSSTransition>
   );
 };
-
-export { Type };

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 // TODO: Make sure this mutex works correctly or if it's even needed.
 function Mutex() {
@@ -20,6 +21,7 @@ function Mutex() {
 
 export const Background: React.FC = () => {
   let history: HistoryItem[];
+  let favorites: string[];
   let current: string;
   const mutex = new Mutex();
   const ref = useRef<HTMLTextAreaElement>();
@@ -31,7 +33,9 @@ export const Background: React.FC = () => {
   };
 
   const save = () => {
-    chrome.storage.local.set({ "clipboard-history": history });
+    chrome.storage.local.set({
+      storage: { history: history, favorites: favorites },
+    });
   };
 
   const read = () => {
@@ -52,10 +56,11 @@ export const Background: React.FC = () => {
 
   useEffect(() => {
     // history = [];
+    // favorites = [];
     // save();
-    chrome.storage.local.get("clipboard-history", (result) => {
-      history = result["clipboard-history"] || [];
-      console.log(history);
+    chrome.storage.local.get("storage", ({ storage }) => {
+      history = (storage && storage.history) || [];
+      favorites = (storage && storage.favorites) || [];
       current = read();
 
       // TODO: Clear interval on unmount?
@@ -65,6 +70,7 @@ export const Background: React.FC = () => {
           if (current !== newest) {
             current = newest;
             history.push({
+              id: uuidv4(),
               date: new Date(),
               value: current,
             });

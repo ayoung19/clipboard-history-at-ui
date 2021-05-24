@@ -1,4 +1,5 @@
 interface HistoryItem {
-  date: Date,
-  value: string,
+  id: string;
+  date: Date;
+  value: string;
 }

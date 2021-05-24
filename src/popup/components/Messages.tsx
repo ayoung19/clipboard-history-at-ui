@@ -1,11 +1,10 @@
 import React from "react";
-import { selectMessages } from "../store/messages";
 import { TransitionGroup } from "react-transition-group";
-import { useAppSelector } from "../util/hooks";
+import { useAppSelector } from "../utils";
 import { Message } from "./Message";
 
 export const Messages = () => {
-  const messages = useAppSelector(selectMessages);
+  const messages = useAppSelector((state) => state.messages);
 
   return (
     <TransitionGroup>

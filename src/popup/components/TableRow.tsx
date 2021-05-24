@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { classNames, Type } from "../util/helpers";
+import { classNames, useAppDispatch } from "../utils";
+import { Type } from "../enums";
 import { Checkbox } from "./Checkbox";
 import Tippy from "@tippyjs/react";
-import { add } from "../store/messages";
-import { useAppDispatch } from "../util/hooks";
+import { addMessage, toggleChecked } from "../store/actions";
 
-export const TableRow = ({ index, rowHeight, text }) => {
+export const TableRow = ({ id, index, rowHeight, text, checked }) => {
   const dispatch = useAppDispatch();
-  const [checked, setChecked] = useState(false);
   const [flash, setFlash] = useState(false);
 
   useEffect(() => {
@@ -22,14 +21,14 @@ export const TableRow = ({ index, rowHeight, text }) => {
     if (!flash) {
       chrome.runtime.sendMessage({ type: "copy", payload: text });
       setFlash(true);
-      dispatch(
-        add({
-          type: Type.success,
-          text: "Item has been copied to clipboard!",
-        })
-      );
+      dispatch(addMessage(Type.success, "Item has been copied to clipboard!"));
     }
   };
+
+  const checkHandler = (event) => {
+    event.stopPropagation();
+    dispatch(toggleChecked(id));
+  }
 
   return (
     <Tippy
@@ -53,7 +52,7 @@ export const TableRow = ({ index, rowHeight, text }) => {
         }}
       >
         <div className="w-col1 inline-block px-4">
-          <Checkbox checked={checked} setChecked={setChecked} />
+          <Checkbox checked={checked} onClick={checkHandler} />
         </div>
         <div className="w-col2 inline-block px-4 truncate select-none text-brand-text">
           {text}

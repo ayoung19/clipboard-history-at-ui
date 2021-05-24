@@ -1,12 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
-import messagesReducer from "./messages";
+import { createStore } from "redux";
+import reducer, { initialState } from "./reducer";
 
-export const store = configureStore({
-  reducer: {
-    messages: messagesReducer,
-  },
-});
+export const store = createStore(reducer, initialState);
 
 export type RootState = ReturnType<typeof store.getState>;
-
 export type AppDispatch = typeof store.dispatch;

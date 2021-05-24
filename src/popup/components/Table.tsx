@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
+import { hydrate } from "../store/actions";
+import { useAppDispatch, useAppSelector } from "../utils";
 import { TableRow } from "./TableRow";
 
 export const Table = ({ rowHeight }) => {
-  const [history, setHistory] = useState([]);
+  const dispatch = useAppDispatch();
+  const history = useAppSelector((state) => state.history);
+  const checked = useAppSelector((state) => state.checked);
   const [range, setRange] = useState([0, 0]);
   const rangeRef = useRef(range);
 
   useEffect(() => {
-    chrome.storage.local.get("clipboard-history", (result) => {
-      result["clipboard-history"].reverse();
-      setHistory(result["clipboard-history"] || []);
+    chrome.storage.local.get("storage", (result) => {
+      const history = result["storage"].history.reverse() || [];
+      const favorites = result["storage"].favorites;
+      console.log(history, favorites)
+      dispatch(hydrate(history, favorites));
     });
   }, []);
 
@@ -45,10 +51,12 @@ export const Table = ({ rowHeight }) => {
     <div style={{ height: `${history.length * rowHeight}px` }}>
       {history.slice(...range).map((item, i) => (
         <TableRow
-          key={range[0] + i}
+          key={item.id}
+          id={item.id}
           index={range[0] + i}
           text={item.value.replace("\n", "")}
           rowHeight={rowHeight}
+          checked={checked.includes(item.id)}
         />
       ))}
     </div>

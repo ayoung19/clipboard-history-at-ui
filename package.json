@@ -29,7 +29,6 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.5.1",
     "@tippyjs/react": "^4.2.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

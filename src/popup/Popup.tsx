@@ -1,6 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "./store/index";
+import { store } from "./store";
 import { Messages } from "./components/Messages";
 import { Table } from "./components/Table";
 
