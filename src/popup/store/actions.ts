@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { Type } from "../enums";
-import { AddMessage, RemoveMessage, Hydrate, ToggleChecked } from "./types";
+import { AddMessage, RemoveMessage, Hydrate, ToggleChecked, ToggleFavorited } from "./types";
 
 export const addMessage = (type: Type, text: string): AddMessage => ({
   type: "addMessage",
@@ -23,5 +23,10 @@ export const hydrate = (history: HistoryItem[], favorites: string[]): Hydrate =>
 
 export const toggleChecked = (id: string): ToggleChecked => ({
   type: "toggleChecked",
+  id: id,
+});
+
+export const toggleFavorited = (id: string): ToggleFavorited => ({
+  type: "toggleFavorited",
   id: id,
 });

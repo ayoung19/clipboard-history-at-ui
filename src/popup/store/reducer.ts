@@ -33,6 +33,13 @@ const reducer = (state = initialState, action: ApplicationAction): ApplicationSt
           ? state.checked.filter((id) => id !== action.id)
           : state.checked.concat(action.id),
       };
+    case "toggleFavorited":
+      return {
+        ...state,
+        favorites: state.favorites.includes(action.id)
+          ? state.favorites.filter((id) => id !== action.id)
+          : state.favorites.concat(action.id),
+      };
     default:
       return state;
   }
