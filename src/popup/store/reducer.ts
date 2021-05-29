@@ -52,6 +52,13 @@ const reducer = (state = initialState, action: ApplicationAction): ApplicationSt
         checked: state.checked.filter((id) => !ids.has(id)),
       };
     }
+    case "checkAll":
+      return {
+        ...state,
+        checked: state.checked.length === 0
+          ? state.history.map(({ id }) => id)
+          : []
+      }
     default:
       return state;
   }

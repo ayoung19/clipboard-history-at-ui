@@ -7,6 +7,7 @@ import {
   ToggleChecked,
   FavoriteItems,
   RemoveItems,
+  CheckAll,
 } from "./types";
 
 export const addMessage = (type: Type, text: string): AddMessage => ({
@@ -41,4 +42,8 @@ export const favoriteItems = (ids: string[]): FavoriteItems => ({
 export const removeItems = (ids: string[]): RemoveItems => ({
   type: "removeItems",
   ids: ids,
+});
+
+export const checkAll = (): CheckAll => ({
+  type: "checkAll",
 });

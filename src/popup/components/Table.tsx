@@ -5,7 +5,7 @@ import { TableRow } from "./TableRow";
 import { Favorite } from "./Favorite";
 import { Remove } from "./Remove";
 import { Checkbox } from "./Checkbox";
-import { favoriteItems, removeItems } from "../store/actions";
+import { favoriteItems, removeItems, checkAll } from "../store/actions";
 
 interface TableProps {
   rowHeight: number;
@@ -59,7 +59,7 @@ export const Table: FC<TableProps> = ({ rowHeight }) => {
   console.log(checked, history);
 
   const checkAllHandler = () => {
-    // TODO: Add check all functionality
+    dispatch(checkAll());
   }
 
   const favoriteCheckedHandler = () => {
@@ -79,9 +79,9 @@ export const Table: FC<TableProps> = ({ rowHeight }) => {
         }}
       >
         <div className="w-col1 inline-block px-4">
-          <Checkbox checked={false} onClick={checkAllHandler} />
+          <Checkbox checked={checked.length > 0} onClick={checkAllHandler} />
         </div>
-        <div className="w-col3 inline-block">
+        <div className="w-col3 inline-block px-2">
           <Favorite
             favorited={false}
             disabled={checked.length === 0}

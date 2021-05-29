@@ -45,10 +45,15 @@ export interface RemoveItems extends Action {
   ids: string[];
 }
 
+export interface CheckAll extends Action {
+  type: "checkAll";
+}
+
 export type ApplicationAction =
   | AddMessage
   | RemoveMessage
   | Hydrate
   | ToggleChecked
   | FavoriteItems
-  | RemoveItems;
+  | RemoveItems
+  | CheckAll;
