@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { hydrate } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../utils";
 import { TableRow } from "./TableRow";
+import { Favorite } from "./Favorite";
+import { Remove } from "./Remove";
+import { Checkbox } from "./Checkbox";
+import { favoriteItems, removeItems } from "../store/actions";
 
 export const Table = ({ rowHeight }) => {
   const dispatch = useAppDispatch();
@@ -14,7 +18,7 @@ export const Table = ({ rowHeight }) => {
     chrome.storage.local.get("storage", (result) => {
       const history = result["storage"].history.reverse() || [];
       const favorites = result["storage"].favorites;
-      console.log(history, favorites)
+      console.log(history, favorites);
       dispatch(hydrate(history, favorites));
     });
   }, []);
@@ -47,8 +51,36 @@ export const Table = ({ rowHeight }) => {
     return [renderStart, renderStart + renderLength];
   };
 
+  
+  console.log(checked, history);
+
   return (
     <div style={{ height: `${history.length * rowHeight}px` }}>
+      <div
+        className="flex items-center"
+        style={{
+          height: `${rowHeight}px`,
+        }}
+      >
+        <div className="w-col1 inline-block px-4">
+          <Checkbox checked={false} onClick={() => {}} />
+        </div>
+        <div className="w-col3 inline-block">
+          <Favorite
+            favorited={false}
+            disabled={checked.length === 0}
+            onClick={() => {
+              dispatch(favoriteItems(checked));
+            }}
+          />
+          <Remove
+            disabled={checked.length === 0}
+            onClick={() => {
+              dispatch(removeItems(checked));
+            }}
+          />
+        </div>
+      </div>
       {history.slice(...range).map((item, i) => (
         <TableRow
           key={item.id}

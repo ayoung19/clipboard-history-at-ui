@@ -1,16 +1,16 @@
 import React from "react";
-import { TableRowAction } from "./TableRowAction";
+import { Action } from "./Action";
 import { classNames } from "../utils";
 
-export const TableRowFavorite = ({ favorited, onClick }) => {
+export const Favorite = ({ favorited, disabled, onClick }) => {
   return (
-    <TableRowAction disabled={false} onClick={onClick}>
+    <Action disabled={disabled} onClick={onClick}>
       <i
         className={classNames(
           "feather",
           favorited ? "icon-star-on text-yellow-500" : "icon-star"
         )}
       />
-    </TableRowAction>
+    </Action>
   );
 };

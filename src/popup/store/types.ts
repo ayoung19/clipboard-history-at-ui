@@ -35,14 +35,14 @@ export interface ToggleChecked extends Action {
   id: string;
 }
 
-export interface ToggleFavorited extends Action {
-  type: "toggleFavorited";
-  id: string;
+export interface FavoriteItems extends Action {
+  type: "favoriteItems";
+  ids: string[];
 }
 
-export interface RemoveItem extends Action {
-  type: "removeItem";
-  id: string;
+export interface RemoveItems extends Action {
+  type: "removeItems";
+  ids: string[];
 }
 
 export type ApplicationAction =
@@ -50,5 +50,5 @@ export type ApplicationAction =
   | RemoveMessage
   | Hydrate
   | ToggleChecked
-  | RemoveItem
-  | ToggleFavorited;
+  | FavoriteItems
+  | RemoveItems;

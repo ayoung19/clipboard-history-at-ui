@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { classNames, useAppDispatch, useAppSelector } from "../utils";
 import { Type } from "../enums";
 import { Checkbox } from "./Checkbox";
-import { TableRowFavorite } from "./TableRowFavorite";
-import { TableRowRemove } from "./TableRowRemove";
+import { Favorite } from "./Favorite";
+import { Remove } from "./Remove";
 import Tippy from "@tippyjs/react";
-import { addMessage, toggleChecked, toggleFavorited, removeItem } from "../store/actions";
+import { addMessage, toggleChecked, favoriteItems, removeItems } from "../store/actions";
 
 export const TableRow = ({ id, index, rowHeight, text, checked }) => {
   const dispatch = useAppDispatch();
@@ -35,12 +35,12 @@ export const TableRow = ({ id, index, rowHeight, text, checked }) => {
 
   const favoriteHandler = (event) => {
     event.stopPropagation();
-    dispatch(toggleFavorited(id));
+    dispatch(favoriteItems([id]));
   }
 
   const removeHandler = (event) => {
     event.stopPropagation();
-    dispatch(removeItem(id));
+    dispatch(removeItems([id]));
   }
 
   return (
@@ -71,8 +71,8 @@ export const TableRow = ({ id, index, rowHeight, text, checked }) => {
           {text}
         </div>
         <div className="w-col3 inline-block">
-          <TableRowFavorite favorited={favorited.includes(id)} onClick={favoriteHandler} />
-          <TableRowRemove disabled={favorited.includes(id)} onClick={removeHandler} />
+          <Favorite favorited={favorited.includes(id)} disabled={false} onClick={favoriteHandler} />
+          <Remove disabled={favorited.includes(id)} onClick={removeHandler} />
         </div>
       </div>
     </Tippy>

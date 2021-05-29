@@ -33,18 +33,25 @@ const reducer = (state = initialState, action: ApplicationAction): ApplicationSt
           ? state.checked.filter((id) => id !== action.id)
           : state.checked.concat(action.id),
       };
-    case "toggleFavorited":
+    case "favoriteItems": {
+      const ids = new Set(action.ids);
+      const favorited = new Set(state.favorited);
       return {
         ...state,
-        favorited: state.favorited.includes(action.id)
-          ? state.favorited.filter((id) => id !== action.id)
-          : state.favorited.concat(action.id),
+        favorited: action.ids.filter((id) => favorited.has(id)).length < action.ids.length
+          ? state.favorited.concat(action.ids.filter((id) => !favorited.has(id)))
+          : state.favorited.filter((id) => !ids.has(id)),
       };
-    case "removeItem":
+    }
+    case "removeItems": {
+      const ids = new Set(action.ids);
+      const favorited = new Set(state.favorited);
       return {
         ...state,
-        history: state.history.filter(({ id }) => id !== action.id)
+        history: state.history.filter(({ id }) => favorited.has(id) || !ids.has(id)),
+        checked: state.checked.filter((id) => !ids.has(id)),
       };
+    }
     default:
       return state;
   }
