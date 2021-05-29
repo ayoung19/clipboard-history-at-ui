@@ -1,7 +1,12 @@
-import React from "react";
+import React, { FC, MouseEvent } from "react";
 import { classNames } from "../utils";
 
-export const Checkbox = ({ checked, onClick }) => {
+interface CheckboxProps {
+  checked: boolean;
+  onClick: (event: MouseEvent) => void;
+}
+
+export const Checkbox: FC<CheckboxProps> = ({ checked, onClick }) => {
   return (
     <label
       htmlFor=""

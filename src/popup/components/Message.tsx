@@ -1,10 +1,17 @@
-import React, { useRef } from "react";
+import React, { FC, useRef } from "react";
 import { removeMessage } from "../store/actions";
 import { CSSTransition } from "react-transition-group";
 import { classNames, useAppDispatch } from "../utils";
 import { Type } from "../enums";
 
-export const Message = ({ text, index, type, ...props }) => {
+interface MessageProps {
+  id: string;
+  text: string;
+  index: number;
+  type: Type;
+}
+
+export const Message: FC<MessageProps> = ({ text, index, type, ...props }) => {
   const dispatch = useAppDispatch();
   const nodeRef = useRef();
 

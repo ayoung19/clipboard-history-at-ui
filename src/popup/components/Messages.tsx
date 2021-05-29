@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import { TransitionGroup } from "react-transition-group";
 import { useAppSelector } from "../utils";
 import { Message } from "./Message";
 
-export const Messages = () => {
+export const Messages: FC = () => {
   const messages = useAppSelector((state) => state.messages);
 
   return (

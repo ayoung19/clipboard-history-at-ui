@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { hydrate } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../utils";
 import { TableRow } from "./TableRow";
@@ -7,7 +7,11 @@ import { Remove } from "./Remove";
 import { Checkbox } from "./Checkbox";
 import { favoriteItems, removeItems } from "../store/actions";
 
-export const Table = ({ rowHeight }) => {
+interface TableProps {
+  rowHeight: number;
+}
+
+export const Table: FC<TableProps> = ({ rowHeight }) => {
   const dispatch = useAppDispatch();
   const history = useAppSelector((state) => state.history);
   const checked = useAppSelector((state) => state.checked);
@@ -54,6 +58,18 @@ export const Table = ({ rowHeight }) => {
   
   console.log(checked, history);
 
+  const checkAllHandler = () => {
+    // TODO: Add check all functionality
+  }
+
+  const favoriteCheckedHandler = () => {
+    dispatch(favoriteItems(checked));
+  }
+
+  const removeCheckedHandler = () => {
+    dispatch(removeItems(checked));
+  }
+
   return (
     <div style={{ height: `${history.length * rowHeight}px` }}>
       <div
@@ -63,32 +79,28 @@ export const Table = ({ rowHeight }) => {
         }}
       >
         <div className="w-col1 inline-block px-4">
-          <Checkbox checked={false} onClick={() => {}} />
+          <Checkbox checked={false} onClick={checkAllHandler} />
         </div>
         <div className="w-col3 inline-block">
           <Favorite
             favorited={false}
             disabled={checked.length === 0}
-            onClick={() => {
-              dispatch(favoriteItems(checked));
-            }}
+            onClick={favoriteCheckedHandler}
           />
           <Remove
             disabled={checked.length === 0}
-            onClick={() => {
-              dispatch(removeItems(checked));
-            }}
+            onClick={removeCheckedHandler}
           />
         </div>
       </div>
-      {history.slice(...range).map((item, i) => (
+      {history.slice(...range).map(({ id, value }, i) => (
         <TableRow
-          key={item.id}
-          id={item.id}
+          key={id}
+          id={id}
           index={range[0] + i}
-          text={item.value.replace("\n", "")}
+          value={value}
+          checked={checked.includes(id)}
           rowHeight={rowHeight}
-          checked={checked.includes(item.id)}
         />
       ))}
     </div>

@@ -1,13 +1,18 @@
-import React from "react";
+import React, { FC, ReactNode, MouseEvent } from "react";
 import { classNames } from "../utils";
 
-//disabled:cursor-not-allowed disabled:bg-transparent disabled:text-black-50
-export const Action = ({ children, disabled, onClick }) => {
-  const handleClick = (event) => {
-    if (!disabled) {
-      onClick(event);
-    } else {
+interface ActionProps {
+  children: ReactNode;
+  disabled: boolean;
+  onClick: (event: MouseEvent) => void;
+}
+
+export const Action: FC<ActionProps> = ({ children, disabled, onClick }) => {
+  const handleClick = (event: MouseEvent) => {
+    if (disabled) {
       event.stopPropagation();
+    } else {
+      onClick(event);
     }
   }
   

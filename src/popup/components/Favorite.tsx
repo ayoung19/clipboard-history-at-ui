@@ -1,8 +1,14 @@
-import React from "react";
+import React, { FC, MouseEvent } from "react";
 import { Action } from "./Action";
 import { classNames } from "../utils";
 
-export const Favorite = ({ favorited, disabled, onClick }) => {
+interface FavoriteProps {
+  favorited: boolean;
+  disabled: boolean;
+  onClick: (event: MouseEvent) => void;
+}
+
+export const Favorite: FC<FavoriteProps> = ({ favorited, disabled, onClick }) => {
   return (
     <Action disabled={disabled} onClick={onClick}>
       <i

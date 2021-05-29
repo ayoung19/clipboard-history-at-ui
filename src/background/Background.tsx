@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 // TODO: Make sure this mutex works correctly or if it's even needed.
@@ -19,7 +19,7 @@ function Mutex() {
   };
 }
 
-export const Background: React.FC = () => {
+export const Background: FC = () => {
   let history: HistoryItem[];
   let favorites: string[];
   let current: string;
