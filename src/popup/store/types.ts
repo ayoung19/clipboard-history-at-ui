@@ -10,7 +10,7 @@ export interface Message {
 export interface ApplicationState {
   messages: Message[];
   history: HistoryItem[];
-  favorites: string[];
+  favorited: string[];
   checked: string[];
   search: string;
 }
@@ -27,7 +27,7 @@ export interface RemoveMessage extends Action {
 export interface Hydrate extends Action {
   type: "hydrate";
   history: HistoryItem[];
-  favorites: string[];
+  favorited: string[];
 }
 
 export interface ToggleChecked extends Action {
@@ -40,9 +40,15 @@ export interface ToggleFavorited extends Action {
   id: string;
 }
 
+export interface RemoveItem extends Action {
+  type: "removeItem";
+  id: string;
+}
+
 export type ApplicationAction =
   | AddMessage
   | RemoveMessage
   | Hydrate
   | ToggleChecked
+  | RemoveItem
   | ToggleFavorited;

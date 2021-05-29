@@ -7,8 +7,8 @@ module.exports = {
     extend: {
       width: {
         col1: "50px",
-        col2: "600px",
-        col3: "50px",
+        col2: "570px",
+        col3: "80px",
       },
       transitionTimingFunction: {
         default: "ease",
