@@ -21,9 +21,9 @@ export const Table: FC<TableProps> = ({ rowHeight }) => {
   useEffect(() => {
     chrome.storage.local.get("storage", (result) => {
       const history = result["storage"].history.reverse() || [];
-      const favorites = result["storage"].favorites;
-      console.log(history, favorites);
-      dispatch(hydrate(history, favorites));
+      const favorited = result["storage"].favorited;
+      console.log(history, favorited);
+      dispatch(hydrate(history, favorited));
     });
   }, []);
 
@@ -63,10 +63,12 @@ export const Table: FC<TableProps> = ({ rowHeight }) => {
   }
 
   const favoriteCheckedHandler = () => {
+    chrome.runtime.sendMessage({ type: "favoriteItems", payload: checked });
     dispatch(favoriteItems(checked));
   }
 
   const removeCheckedHandler = () => {
+    chrome.runtime.sendMessage({ type: "removeItems", payload: checked });
     dispatch(removeItems(checked));
   }
 

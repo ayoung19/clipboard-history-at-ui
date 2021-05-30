@@ -43,11 +43,13 @@ export const TableRow: FC<TableRowProps> = ({ id, index, value, checked, rowHeig
 
   const favoriteHandler = (event: MouseEvent) => {
     event.stopPropagation();
+    chrome.runtime.sendMessage({ type: "favoriteItems", payload: [id] });
     dispatch(favoriteItems([id]));
   }
 
   const removeHandler = (event: MouseEvent) => {
     event.stopPropagation();
+    chrome.runtime.sendMessage({ type: "removeItems", payload: [id] });
     dispatch(removeItems([id]));
   }
 

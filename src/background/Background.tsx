@@ -21,7 +21,7 @@ function Mutex() {
 
 export const Background: FC = () => {
   let history: HistoryItem[];
-  let favorites: string[];
+  let favorited: string[];
   let current: string;
   const mutex = new Mutex();
   const ref = useRef<HTMLTextAreaElement>();
@@ -34,7 +34,7 @@ export const Background: FC = () => {
 
   const save = () => {
     chrome.storage.local.set({
-      storage: { history: history, favorites: favorites },
+      storage: { history: history, favorited: favorited },
     });
   };
 
@@ -56,11 +56,11 @@ export const Background: FC = () => {
 
   useEffect(() => {
     // history = [];
-    // favorites = [];
+    // favorited = [];
     // save();
     chrome.storage.local.get("storage", ({ storage }) => {
       history = (storage && storage.history) || [];
-      favorites = (storage && storage.favorites) || [];
+      favorited = (storage && storage.favorited) || [];
       current = read();
 
       // TODO: Clear interval on unmount?
@@ -80,11 +80,38 @@ export const Background: FC = () => {
       }, 1000);
     });
 
+
+    // TODO: Figure out better way to handle message payload typing.
     chrome.runtime.onMessage.addListener((message) => {
       if (message.type === "copy") {
         critical(() => {
           current = message.payload;
           write(current);
+        });
+      }
+
+      // TODO: Figure out a better data flow/logic for actions that are also being done in the UI.
+      if (message.type === "removeItems") {
+        critical(() => {
+          const idsSet = new Set(message.payload);
+          const favoritedSet = new Set(favorited);
+
+          history = history.filter(({ id }) => favoritedSet.has(id) || !idsSet.has(id));
+          
+          save();
+        });
+      }
+
+      if (message.type === "favoriteItems") {
+        critical(() => {
+          const idsSet = new Set(message.payload);
+          const favoritedSet = new Set(favorited);
+
+          favorited = message.payload.filter((id: string) => favoritedSet.has(id)).length < message.payload.length
+            ? favorited.concat(message.payload.filter((id: string) => !favoritedSet.has(id)))
+            : favorited.filter((id) => !idsSet.has(id));
+
+          save();
         });
       }
 
