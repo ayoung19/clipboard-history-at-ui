@@ -49,6 +49,11 @@ export interface CheckAll extends Action {
   type: "checkAll";
 }
 
+export interface UpdateSearch extends Action {
+  type: "updateSearch";
+  search: string;
+}
+
 export type ApplicationAction =
   | AddMessage
   | RemoveMessage
@@ -56,4 +61,5 @@ export type ApplicationAction =
   | ToggleChecked
   | FavoriteItems
   | RemoveItems
-  | CheckAll;
+  | CheckAll
+  | UpdateSearch;

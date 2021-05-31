@@ -8,6 +8,7 @@ import {
   FavoriteItems,
   RemoveItems,
   CheckAll,
+  UpdateSearch
 } from "./types";
 
 export const addMessage = (type: Type, text: string): AddMessage => ({
@@ -46,4 +47,9 @@ export const removeItems = (ids: string[]): RemoveItems => ({
 
 export const checkAll = (): CheckAll => ({
   type: "checkAll",
+});
+
+export const updateSearch = (search: string): UpdateSearch => ({
+  type: "updateSearch",
+  search: search,
 });

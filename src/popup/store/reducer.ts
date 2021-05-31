@@ -59,6 +59,11 @@ const reducer = (state = initialState, action: ApplicationAction): ApplicationSt
           ? state.history.map(({ id }) => id)
           : []
       }
+    case "updateSearch":
+      return {
+        ...state,
+        search: action.search,
+      }
     default:
       return state;
   }

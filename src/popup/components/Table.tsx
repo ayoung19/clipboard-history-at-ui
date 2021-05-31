@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { hydrate } from "../store/actions";
 import { useAppDispatch, useAppSelector } from "../utils";
+import { Search } from "./Search";
 import { TableRow } from "./TableRow";
 import { Favorite } from "./Favorite";
 import { Remove } from "./Remove";
@@ -13,10 +14,13 @@ interface TableProps {
 
 export const Table: FC<TableProps> = ({ rowHeight }) => {
   const dispatch = useAppDispatch();
+  const search = useAppSelector((state) => state.search);
   const history = useAppSelector((state) => state.history);
   const checked = useAppSelector((state) => state.checked);
   const [range, setRange] = useState([0, 0]);
   const rangeRef = useRef(range);
+
+  const filtered = history.filter(({ value }) => value.includes(search));
 
   useEffect(() => {
     chrome.storage.local.get("storage", (result) => {
@@ -73,7 +77,8 @@ export const Table: FC<TableProps> = ({ rowHeight }) => {
   }
 
   return (
-    <div style={{ height: `${history.length * rowHeight}px` }}>
+    <div style={{ height: `${filtered.length * rowHeight}px` }}>
+      <Search />
       <div
         className="flex items-center"
         style={{
@@ -95,7 +100,7 @@ export const Table: FC<TableProps> = ({ rowHeight }) => {
           />
         </div>
       </div>
-      {history.slice(...range).map(({ id, value }, i) => (
+      {filtered.slice(...range).map(({ id, value }, i) => (
         <TableRow
           key={id}
           id={id}
