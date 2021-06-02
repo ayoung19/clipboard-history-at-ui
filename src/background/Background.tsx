@@ -2,18 +2,18 @@ import React, { FC, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 // TODO: Make sure this mutex works correctly or if it's even needed.
-function Mutex() {
-  let current = Promise.resolve();
-  this.lock = () => {
-    let _resolve;
-    const p = new Promise((resolve) => {
+class Mutex {
+  current = Promise.resolve();
+  lock = () => {
+    let _resolve: () => void;
+    const p = new Promise<void>((resolve) => {
       _resolve = () => resolve();
     });
     // Caller gets a promise that resolves when the current outstanding
     // lock resolves
-    const rv = current.then(() => _resolve);
+    const rv = this.current.then(() => _resolve);
     // Don't allow the next request until the new promise is done
-    current = p;
+    this.current = p;
     // Return the new promise
     return rv;
   };
@@ -52,6 +52,7 @@ export const Background: FC = () => {
     textarea.value = value;
     textarea.select();
     document.execCommand("copy");
+    console.log(textarea.value);
   };
 
   useEffect(() => {
@@ -85,6 +86,7 @@ export const Background: FC = () => {
     chrome.runtime.onMessage.addListener((message) => {
       if (message.type === "copy") {
         critical(() => {
+          console.log(current, message.payload)
           current = message.payload;
           write(current);
         });
